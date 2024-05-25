@@ -1,4 +1,5 @@
 // j-text, j-html, j-on, (j-if, j-else), j-for (будет выводить текст из массива?)
+// глубокая волженность, j-model для инпутов
 
 const signals = {};
 
@@ -66,6 +67,9 @@ class Vjy {
 
         const jhtml = document.querySelectorAll(`${this.node} [j-html]`);
         jhtml.forEach(this.jHTML)
+
+        const jon = document.querySelectorAll(`${this.node} [j-on]`);
+        jon.forEach(this.jOn)
     }    
     
     jText = (node) => {
@@ -84,11 +88,16 @@ class Vjy {
         const attr = node.attributes['j-html'].value;
         node.innerHTML = this.data[attr]
 
-        console.log(attr)
     }
 
-    jOn(node) {
-        
+    jOn = (node) => {
+        const attr = node.attributes['j-on'].value.split(':');
+        const attrEvent = attr[0].trim()
+        const attrMethods = attr[1].trim()
+        node.addEventListener(attrEvent, this.methods[attrMethods].bind(this.data))
+
+        console.log(attrEvent);
+        console.log(attrMethods);
     }
 
     jIfElse(node) {
@@ -122,12 +131,17 @@ const app = new Vjy({
     el: '.app',
     data: {
         text: 'Hello World',
-        textMin: '',
+        textMin: 'gfd',
         par: '<p>text</p>'
     },
     methods: {
         hello() {
             alert('hello')
+        },
+        reverseText() {
+            console.log(this);
+            this.textMin= this.textMin.split('').reverse().join('')
+            
         }
     }
 });
