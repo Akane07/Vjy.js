@@ -12,7 +12,11 @@
         <p j-text = "textMin"></p>
         <div j-html = 'par'></div>
         <p j-text = "textMin" j-on="click: reverseText">Hello</p>
-    </div>
+        <div>
+            <p j-if = 'textBool'>text</p>
+            <p j-else>bp</p>
+        </div>
+    </div> 
     </body>
     <script src="script.js"></script>
 </body>

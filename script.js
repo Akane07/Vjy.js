@@ -70,6 +70,9 @@ class Vjy {
 
         const jon = document.querySelectorAll(`${this.node} [j-on]`);
         jon.forEach(this.jOn)
+
+        const jIfElse = document.querySelectorAll(`${this.node} [j-if]`);
+        jIfElse.forEach(this.jIfElse)
     }    
     
     jText = (node) => {
@@ -100,8 +103,16 @@ class Vjy {
         console.log(attrMethods);
     }
 
-    jIfElse(node) {
-        
+    jIfElse = (node) => {
+        let attrNode = node
+        let attrNodeElse = node.nextElementSibling
+
+        const attrIf = this.data[node.attributes['j-if'].value]
+        if (node.nextElementSibling.attributes['j-else'] && attrIf == false) {
+            attrNode = node.style.display = 'none'
+        } else {
+            attrNodeElse = node.nextElementSibling.style.display = 'none'
+        }
     }
 
     jFor(node) {
@@ -132,7 +143,9 @@ const app = new Vjy({
     data: {
         text: 'Hello World',
         textMin: 'gfd',
-        par: '<p>text</p>'
+        par: '<p>text</p>',
+        textBool: false
+
     },
     methods: {
         hello() {
